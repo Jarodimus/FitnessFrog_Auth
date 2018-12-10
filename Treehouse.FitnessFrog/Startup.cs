@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Owin;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,7 @@ namespace Treehouse.FitnessFrog
     {
         public void Configuration(IAppBuilder app)
         {
+            ConfigureAuth(app);
         }
     }
 }
