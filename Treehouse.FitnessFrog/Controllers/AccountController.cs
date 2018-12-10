@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,44 @@ namespace Treehouse.FitnessFrog.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
             _authenticationManager = authenticationManager;
+        }
+
+        public ActionResult SignIn()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> SignIn(AccountSignInViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+            SignInStatus result = await _signInManager.PasswordSignInAsync(viewModel.Email, viewModel.Password, viewModel.RememberMe, false);
+            switch (result)
+            {
+                case SignInStatus.Success:
+                    return RedirectToAction("Index", "Entries");
+                case SignInStatus.Failure:
+                    ModelState.AddModelError("", $"Invalid username and/or password.");
+                    return View(viewModel);
+                case SignInStatus.LockedOut:
+                    ModelState.AddModelError("", $"You have been locked out after too many invalid login attempts.");
+                    return View(viewModel);
+                case SignInStatus.RequiresVerification:
+                    throw new NotImplementedException("Identity feature not implemented.");
+                default:
+                    throw new Exception("Unexpected Microsoft.AspNet.Identity.Owin.SignInStatus enum value: " + result);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult SignOut()
+        {
+            _authenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+
+            return RedirectToAction("Index", "Entries");
         }
 
         public ActionResult Register()

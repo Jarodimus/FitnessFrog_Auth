@@ -194,6 +194,8 @@
     <Content Include="Views\Shared\_Logo.cshtml" />
     <Content Include="Views\Entries\_EntryForm.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\SignIn.cshtml" />
+    <Content Include="Views\Shared\_Menu.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
