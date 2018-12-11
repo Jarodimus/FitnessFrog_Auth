@@ -29,12 +29,23 @@ namespace Treehouse.FitnessFrog.Controllers
             _authenticationManager = authenticationManager;
         }
 
+        [HttpPost]
+        public ActionResult SignOut()
+        {
+            _authenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+
+            return RedirectToAction("Index", "Entries");
+        }
+
+
+        [AllowAnonymous]
         public ActionResult SignIn()
         {
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<ActionResult> SignIn(AccountSignInViewModel viewModel)
         {
             if (!ModelState.IsValid)
@@ -59,13 +70,6 @@ namespace Treehouse.FitnessFrog.Controllers
             }
         }
 
-        [HttpPost]
-        public ActionResult SignOut()
-        {
-            _authenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-
-            return RedirectToAction("Index", "Entries");
-        }
 
         public ActionResult Register()
         {

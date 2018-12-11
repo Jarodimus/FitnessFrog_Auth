@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Treehouse.FitnessFrog.App_Start;
 
 namespace Treehouse.FitnessFrog
 {
@@ -13,6 +14,7 @@ namespace Treehouse.FitnessFrog
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
         }
     }
 }
